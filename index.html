@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html> 	
+   <head>
+     <meta charset="utf-8"> 
+     <title>My first three.js app</title> 	
+     <style> 
+       body { margin: 0; } 
+       canvas { display: block; }
+     </style>
+   </head> 
+   <body> 
+ 
+     <script src="/storage/emulated/0/js/js/three.js"></script>
+     <script src="/storage/emulated/0/js/js/OrbitControls.js"></script> 
+     <script src="/storage/emulated/0/js/js/GLTFLoader.js"></script> 
+     
+     <script> 	
+    
+     // Our Javascript will go here. 	
+       const scene = new THREE.Scene();
+       const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 ); 
+       const renderer = new THREE.WebGLRenderer(); 
+       renderer.setSize( window.innerWidth, window.innerHeight ); 
+       document.body.appendChild( renderer.domElement ); 
+//       camera.position.set(0,0,100);
+       camera.position.set(0,-3,30);
+      { 
+        const color = 0xFFFFFF; 
+        const intensity = 1;
+        const light = new THREE.DirectionalLight(color, intensity);
+        light.position.set(-1, 100, 4);
+        scene.add(light);
+      }
+scene.background = new THREE.Color('lightblue');
+const animate = function () { 			
+	controls.update();
+	requestAnimationFrame( animate );  
+	renderer.render( scene, camera ); 		
+}; 		
+        
+const controls = new THREE.OrbitControls (camera, renderer.domElement);
+
+var loader = new THREE.GLTFLoader();
+const MODEL_PATH = 'stacy_lightweight.glb';
+//const MODEL_PATH = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy_lightweight.glb';
+loader.load(
+ MODEL_PATH, 
+ function(gltf) {
+  // A lot is going to happen here 
+  model = gltf.scene; 
+  let fileAnimations = gltf.animations; 
+  scene.add(model); 
+  }, 
+  undefined, 
+  // We don't need this function 
+  function(error) {
+   console.error(error);
+    } 
+ );
+
+const pointsv = [];       
+pointsv.push( new THREE.Vector3( 0, 0, 0 ) );
+pointsv.push( new THREE.Vector3( 10, 10, 10 ) );
+pointsv.push( new THREE.Vector3( 0, -10, -10 ) );
+
+pointsv.push( new THREE.Vector3( 20, 20, 20 ) );
+pointsv.push( new THREE.Vector3( 30, 30, 30 ) );
+pointsv.push( new THREE.Vector3( 20, 10, 10 ) );
+
+
+const geometryv = new THREE.BufferGeometry().setFromPoints( pointsv );		
+const materialv = new THREE.MeshBasicMaterial( {color:0xFFFAFA, side: THREE.DoubleSide } ); 	
+const meshv = new THREE.Mesh( geometryv, materialv ); 
+meshv.position.set(0, 0, 0);
+scene.add( meshv ); 
+
+        
+    animate();
+    </script>
+   </body> 
+</html>
