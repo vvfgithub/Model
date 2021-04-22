@@ -10,9 +10,9 @@
    </head> 
    <body> 
  
-     <script src="/storage/emulated/0/js/js/three.js"></script>
-     <script src="/storage/emulated/0/js/js/OrbitControls.js"></script> 
-     <script src="/storage/emulated/0/js/js/GLTFLoader.js"></script> 
+     <script src="./three.js"></script>
+     <script src="./OrbitControls.js"></script> 
+     <script src="./GLTFLoader.js"></script> 
      
      <script> 	
     
@@ -43,6 +43,7 @@ const controls = new THREE.OrbitControls (camera, renderer.domElement);
 var loader = new THREE.GLTFLoader();
 const MODEL_PATH = 'stacy_lightweight.glb';
 //const MODEL_PATH = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy_lightweight.glb';
+//const MODEL_PATH = 'https://vvfgithub.github.io/Model/stacy_lightweight.glb'
 loader.load(
  MODEL_PATH, 
  function(gltf) {
