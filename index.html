@@ -2,7 +2,7 @@
 <html> 	
    <head>
      <meta charset="utf-8"> 
-     <title>My first three.js app</title> 	
+     <title>Experimental application based on work of Kyle Wetton October 16, 2019</title> 	
      <style> 
        body { margin: 0; } 
        canvas { display: block; }
@@ -105,6 +105,7 @@ const animate = function () {
         
                 
 const controls = new THREE.OrbitControls (camera, renderer.domElement);
+controls.maxPolarAngle=Math.PI*0.5;
 
 let stacy_txt = new THREE.TextureLoader().load('stacy.jpg'); 
 stacy_txt.flipY = false; 
