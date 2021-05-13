@@ -2,36 +2,41 @@
 <html> 	
    <head>
      <meta charset="utf-8"> 
-     <title>Experimental application based on work of Kyle Wetton October 16, 2019</title> 	
+     <title>Experimental application based work of Kyle Wetton</title> 	
      <style> 
        body { margin: 0; } 
        canvas { display: block; }
      </style>
    </head> 
-   <body>
- <div style="
- 		position: absolute; 
- 		bottom: 0; left: 40px;
- 		font-size : 60px;
- 		height: 80px;
- "> 	
+   <body> 
+   
+    <div style="
+    position: absolute; 
+    bottom: 0; left: 40px;
+    font-size : 60px;
+    height: 80px;
+    "> 	
+      
     <input type="button"
     id="playButton"       	 
     onclick="speech ()" 
     value="🎙Speak"
-    style="font-size : 40px; height: 70px;"       	 
+    style="font-size : 50px; height: 70px;"       	 
     >
-    
-<!---
+        
+<!---    
     <button onclick="speech ()">Слушать</button>
---->   
+--->    
+    
      <div class="loading" id="js-loader"><div class="loader"></div></div> 
      
      <script src="./three.js"></script>
-     <script src="./OrbitControls.js"></script> 
+    <script src="./OrbitControls.js"></script> 
+    
      <script src="./GLTFLoader.js"></script> 
      
      <script> 	
+    
     var recognizer = new webkitSpeechRecognition(); 
     recognizer.interimResults = true; 
     recognizer.lang = 'ru-Ru'; 
@@ -48,6 +53,8 @@
      recognizer.start(); 
      } 
     
+    
+     // Our Javascript will go here. 	
 (function () {
   // Set our main variables      
   let model, // Our character
@@ -71,7 +78,6 @@
 
 
 
-//       camera.position.set(0,0,100);
        camera.position.set(0,-3,30);
  /*     
       { 
@@ -118,7 +124,7 @@ let floor = new THREE.Mesh(floorGeometry, floorMaterial);
 floor.rotation.x = -0.5 * Math.PI; 
 // This is 90 degrees by the way 
 floor.receiveShadow = true; 
-floor.position.y = -5; 
+floor.position.y = -7; 
 scene.add(floor);
 
 const animate = function () { 			
@@ -136,6 +142,7 @@ const animate = function () {
 const controls = new THREE.OrbitControls (camera, renderer.domElement);
 controls.maxPolarAngle=Math.PI*0.5;
 
+
 let stacy_txt = new THREE.TextureLoader().load('stacy.jpg'); 
 stacy_txt.flipY = false; 
 // we flip the texture so that its the right way up 
@@ -145,61 +152,63 @@ var loader = new THREE.GLTFLoader();
 const MODEL_PATH = 'stacy_lightweight.glb';
 //const MODEL_PATH = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy_lightweight.glb';
 loader.load(
- MODEL_PATH, 
- function(gltf) {
-  // A lot is going to happen here 
-  model = gltf.scene; 
-  let fileAnimations = gltf.animations; 
-  
-  model.traverse(o => 
-  { if (o.isMesh) 
-  { o.castShadow = true;
-  o.receiveShadow = true;
-  o.material = stacy_mtl;
-  } 
-  // Reference the neck and waist bones
-  if (o.isBone && o.name === 'mixamorigNeck') {
-    neck = o;
-  }
-  if (o.isBone && o.name === 'mixamorigSpine') {
-    waist = o;
-  }
-  
-  });  
-  
-  // Set the models initial scale 
+MODEL_PATH,
+function (gltf) {
+  model = gltf.scene;
+  let fileAnimations = gltf.animations;
+
+  model.traverse(o => {
+
+    if (o.isMesh) {
+      o.castShadow = true;
+      o.receiveShadow = true;
+      o.material = stacy_mtl;
+    }
+    // Reference the neck and waist bones
+    if (o.isBone && o.name === 'mixamorigNeck') {
+      neck = o;
+    }
+    if (o.isBone && o.name === 'mixamorigSpine') {
+      waist = o;
+    }
+  });
+
   model.scale.set(7, 7, 7);
-  model.position.y = -5;
-  
+  model.position.y = -7;
+
   scene.add(model);
-  
+
   loaderAnim.remove();
+
   mixer = new THREE.AnimationMixer(model);
-  
+
   let clips = fileAnimations.filter(val => val.name !== 'idle');
   possibleAnims = clips.map(val => {
-  let clip = THREE.AnimationClip.findByName(clips, val.name);
-  
-  clip.tracks.splice(3, 3);
-  clip.tracks.splice(9, 3);
-  
-  clip = mixer.clipAction(clip);
-  return clip;
-  });
-    
-//  console.log(possibleAnims.length,'******');
- let idleAnim = THREE.AnimationClip.findByName(fileAnimations, 'idle');
+    let clip = THREE.AnimationClip.findByName(clips, val.name);
 
-// idleAnim = clips[0];
-  idle = mixer.clipAction(idleAnim); 
+    clip.tracks.splice(3, 3);
+    clip.tracks.splice(9, 3);
+
+    clip = mixer.clipAction(clip);
+    return clip;
+  });
+
+
+  let idleAnim = THREE.AnimationClip.findByName(fileAnimations, 'idle');
+
+  idleAnim.tracks.splice(3, 3);
+  idleAnim.tracks.splice(9, 3);
+
+  idle = mixer.clipAction(idleAnim);
   idle.play();
-  }, 
-  undefined, 
-  // We don't need this function 
-  function(error) {
-   console.error(error);
-    } 
- );
+
+},
+undefined, // We don't need this function
+function (error) {
+  console.error(error);
+});
+
+
 
 //   console.log('length=', possibleAnims.length);
         
@@ -254,15 +263,17 @@ loader.load(
     currentlyAnimating = false;
     }, to._clip.duration * 1000 - (tSpeed + fSpeed) * 1000);
     }
-    
+
+/*    
     document.addEventListener('mousemove', function (e) {
     var mousecoords = getMousePos(e);
-    if (neck && waist) {
     
+    if (neck && waist) {    
     moveJoint(mousecoords, neck, 50);
     moveJoint(mousecoords, waist, 30);
-    }
+    }    
     });
+*/    
     
     function getMousePos(e) {
     return { x: e.clientX, y: e.clientY };
