@@ -15,8 +15,16 @@
  		font-size : 60px;
  		height: 80px;
  "> 	
+    <input type="button"
+    id="playButton"       	 
+    onclick="speech ()" 
+    value="🎙Speak"
+    style="font-size : 40px; height: 70px;"       	 
+    >
+    
+<!---
     <button onclick="speech ()">Слушать</button>
-   
+--->   
      <div class="loading" id="js-loader"><div class="loader"></div></div> 
      
      <script src="./three.js"></script>
@@ -110,7 +118,7 @@ let floor = new THREE.Mesh(floorGeometry, floorMaterial);
 floor.rotation.x = -0.5 * Math.PI; 
 // This is 90 degrees by the way 
 floor.receiveShadow = true; 
-floor.position.y = -11; 
+floor.position.y = -5; 
 scene.add(floor);
 
 const animate = function () { 			
@@ -161,7 +169,7 @@ loader.load(
   
   // Set the models initial scale 
   model.scale.set(7, 7, 7);
-  model.position.y = -11;
+  model.position.y = -5;
   
   scene.add(model);
   
