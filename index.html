@@ -43,9 +43,19 @@
     recognizer.onresult = function (event) { 
      var result = event.results[event.resultIndex]; 
      if (result.isFinal) { 
-     alert('Вы сказали: ' + result[0].transcript); 
-     id=1;
+//     alert('Вы сказали: ' + result[0].transcript); 
+     id=5;
+     s=result[0].transcript;
+     if (s='первый') {id=1};     
+     if (s='второй') {id=2}; 
+     if (s='третий') {id=3};     
+     if (s='четвертый') {id=4};
+     if (s='пятый') {id=5};
+     if (s='шестой') {id=6};
+     if (s='седьмой') {id=7};             
+     if ((id>=0)&&(id<8)) {
      playOnClick1(id);
+     }
      } 
      else { 
      console.log('Промежуточный результат: ', result[0].transcript); 
