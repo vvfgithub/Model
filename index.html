@@ -43,7 +43,7 @@
     recognizer.onresult = function (event) { 
      var result = event.results[event.resultIndex]; 
      if (result.isFinal) { 
-//     alert('Вы сказали: ' + result[0].transcript); 
+     alert('Вы сказали: ' + result[0].transcript); 
      id=5;
      s=result[0].transcript;
      if (s='первый') {id=1};     
