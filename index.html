@@ -38,14 +38,13 @@
      <script> 	
     
     var recognizer = new webkitSpeechRecognition(); 
+    var idanim = 5;
     recognizer.interimResults = true; 
     recognizer.lang = 'ru-Ru'; 
     recognizer.onresult = function (event) { 
      var result = event.results[event.resultIndex]; 
      if (result.isFinal) { 
      alert('Вы сказали: ' + result[0].transcript); 
-     id=5;
-
      
      s=result[0].transcript;
      if (s=='первый') {id=1};     
@@ -58,7 +57,7 @@
                  
     
      if (id>=0 && id<8) {
-     playOnClick1(id);
+     idanim=id;
      }
      } 
      else { 
@@ -78,7 +77,7 @@
   waist, // Reference to the waist bone in the skeleton
   possibleAnims, // Animations found in our file
   mixer, // THREE.js animations mixer
-  idle, // Idle, the default state our character returns to
+  idle, // Idle, the default state our character returns to 
   clock = new THREE.Clock(), // Used for anims, which run to a clock instead of frame rate 
   currentlyAnimating = false, // Used to check whether characters neck is being used in another anim
   raycaster = new THREE.Raycaster(), // Used to detect the click on our character
@@ -260,15 +259,11 @@ function (error) {
     }
     }
     }
-    
-    function playOnClick1(anim) {
-    playModifierAnimation(idle, 0.25, possibleAnims[anim], 0.25);
-    }
-    
+        
     
     // Get a random animation, and play it 
     function playOnClick() {
-    let anim = Math.floor(Math.random() * possibleAnims.length) + 0;  
+    let anim = idanim;//Math.floor(Math.random() * possibleAnims.length) + 0;  
     playModifierAnimation(idle, 0.25, possibleAnims[anim], 0.25);
     }
     
