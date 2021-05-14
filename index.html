@@ -46,7 +46,7 @@
      alert('Вы сказали: ' + result[0].transcript); 
      id=5;
 
- /*    
+     
      s=result[0].transcript;
      if (s=='первый') {id=1};     
      if (s=='второй') {id=2}; 
@@ -56,9 +56,9 @@
      if (s=='шестой') {id=6};
      if (s=='седьмой') {id=7}; 
                  
-     alert('Ответ: ' + s ); 
-   */  
-     if ((id>=0)&&(id<8)) {
+     alert('Ответ: ' + s + String(id) ); 
+    
+     if (id>=0 && id<8) {
      playOnClick1(id);
      }
      } 
