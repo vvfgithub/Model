@@ -247,11 +247,11 @@ function (error) {
     
     // Get a random animation, and play it 
     function playOnClick() {
-    let anim = Math.floor(Math.random() * possibleAnims.length) + 0;
+    let anim = Math.floor(Math.random() * possibleAnims.length) + 0;  
     playModifierAnimation(idle, 0.25, possibleAnims[anim], 0.25);
     }
     
-    
+   
     function playModifierAnimation(from, fSpeed, to, tSpeed) {
     to.setLoop(THREE.LoopOnce);
     to.reset();
@@ -273,7 +273,7 @@ function (error) {
     moveJoint(mousecoords, waist, 30);
     }    
     });
-*/    
+    
     
     function getMousePos(e) {
     return { x: e.clientX, y: e.clientY };
@@ -285,7 +285,9 @@ function (error) {
     joint.rotation.x = THREE.Math.degToRad(degrees.y);
     console.log(joint.rotation.x);
     }
+*/    
     
+ /*   
     function getMouseDegrees(x, y, degreeLimit) {
     let dx = 0,
     dy = 0,
@@ -307,7 +309,7 @@ function (error) {
     dx = degreeLimit * xPercentage / 100 * -1;
     }
     
-    // Right (Rotates neck right between 0 and degreeLimit)
+    // Right (Rotates neck right between 0 and degreeLimit)    
     if (x >= w.x / 2) {
     xdiff = x - w.x / 2;
     xPercentage = xdiff / (w.x / 2) * 100;
@@ -327,9 +329,8 @@ function (error) {
     dy = degreeLimit * yPercentage / 100;
     }
     return { x: dx, y: dy };
-    }
-    
-    
+    }    
+*/    
 })();    
             
     </script>
